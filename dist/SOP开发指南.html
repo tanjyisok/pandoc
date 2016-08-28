@@ -1,0 +1,500 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>SOP开发指南</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #0000ff; }
+code > span.ch { color: #008080; }
+code > span.st { color: #008080; }
+code > span.co { color: #008000; }
+code > span.ot { color: #ff4000; }
+code > span.al { color: #ff0000; }
+code > span.er { font-weight: bold; }
+  </style>
+  <link href="data:text/css,body%20%7B%0A%20%20%20font%3A%2014px%20%27Segoe%20UI%27%2C%27Segoe%20UI%20Web%20Regular%27%2C%27Segoe%20UI%20Symbol%27%2C%27Lato%27%2C%27Helvetica%20Neue%27%2CHelvetica%2CArial%2Csans%2Dserif%3B%0A%20%20%20background%2Dcolor%3A%20white%3B%0A%20%20%20padding%3A%206px%3B%20%7D%0Abody%20%3E%20%2A%3Afirst%2Dchild%20%7B%0A%20%20%20margin%2Dtop%3A%200%20%21important%3B%20%7D%0Abody%20%3E%20%2A%3Alast%2Dchild%20%7B%0A%20%20%20margin%2Dbottom%3A%200%20%21important%3B%20%7D%0A%0Aa%20%7B%0A%20%20%20color%3A%20%234183c4%3B%20%7D%0Aa%2Eabsent%20%7B%0A%20%20%20color%3A%20%23cc0000%3B%20%7D%0Aa%2Eanchor%20%7B%0A%20%20%20display%3A%20block%3B%0A%20%20%20padding%2Dleft%3A%2030px%3B%0A%20%20%20margin%2Dleft%3A%20%2D30px%3B%0A%20%20%20cursor%3A%20pointer%3B%0A%20%20%20position%3A%20absolute%3B%0A%20%20%20top%3A%200%3B%0A%20%20%20left%3A%200%3B%0A%20%20%20bottom%3A%200%3B%20%7D%0Aa%3Alink%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20none%3B%0A%7D%0A%0Aa%3Avisited%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20none%3B%0A%7D%0A%0Aa%3Ahover%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%0A%7D%0A%0Aa%3Aactive%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%0A%7D%0A%0Aimg%23feixunpic%7B%0A%09width%3A200px%3B%0A%09height%3A45px%3B%0A%7D%0A%0Adiv%23feixun%7B%0A%09padding%3A20px%3B%09%0A%09border%2Dbottom%3A1px%20solid%20black%3B%0A%09margin%2Dbottom%3A30px%3B%0A%7D%0A%0Adiv%23title%7B%0A%09text%2Dalign%3Acenter%3B%0A%09font%2Dsize%3A50px%3B%0A%09font%2Dfamily%3A%22Arial%22%2C%22Microsoft%20YaHei%22%2C%22%E9%BB%91%E4%BD%93%22%2C%22%E5%AE%8B%E4%BD%93%22%2Csans%2Dserif%3B%0A%09margin%2Dbottom%3A60px%3B%0A%7D%0A%0Adiv%23author%2Cdiv%23hst%7B%0A%09font%2Dsize%3Alarge%3B%0A%09font%2Dfamily%3A%22Arial%22%2C%22Microsoft%20YaHei%22%2C%22%E9%BB%91%E4%BD%93%22%2C%22%E5%AE%8B%E4%BD%93%22%2Csans%2Dserif%3B%0A%09font%2Dweight%3Abold%3B%0A%7D%0A%0Adiv%23author%7B%0A%09margin%3A50px%200px%2080px%20850px%3B%0A%7D%0A%0Adiv%23hst%7B%0A%09text%2Dalign%3Acenter%3B%0A%7D%0A%0Adiv%23history%7B%0A%09margin%2Dbottom%3A100px%3B%0A%7D%0A%0Adiv%23TOC%5FCONTENT%7B%0A%09font%2Dsize%3Alarge%3B%0A%7D%0A%0Adiv%2Ecatalog%7B%0A%09width%3A33%25%3B%0A%09float%3Aleft%3B%09%0A%7D%0A%0Adiv%2Ecatalog%20ul%20ul%7B%0A%09margin%3A10px%200px%2010px%2015px%3B%0A%09pading%3A0px%3B%0A%20%20%20%20list%2Dstyle%2Dtype%3A%20circle%3B%0A%09font%2Dsize%3A16px%3B%0A%7D%0A%0Adiv%2Ecatalog%20ul%20ul%20ul%7B%0A%09list%2Dstyle%2Dtype%3A%20square%3B%0A%09margin%3A10px%200px%2010px%205px%3B%0A%7D%0A%0Adiv%23main%7B%0A%09font%2Dfamily%3A%22Arial%22%2C%22Microsoft%20YaHei%22%2C%22%E9%BB%91%E4%BD%93%22%2C%22%E5%AE%8B%E4%BD%93%22%2Csans%2Dserif%3B%0A%09font%2Dsize%3A16px%3B%09%0A%09line%2Dheight%3A2em%3B%0A%09width%3A980px%3B%0A%7D%0A%0Adiv%2Efootnotes%7B%0A%20%20font%2Dsize%3A13px%3B%0A%7D%0A%0Ah1%2C%20h2%2C%20h3%2C%20h4%2C%20h5%2C%20h6%20%7B%0A%20%20%20margin%3A%2020px%200%2010px%3B%0A%20%20%20padding%3A%200%3B%0A%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%20%2Dwebkit%2Dfont%2Dsmoothing%3A%20antialiased%3B%0A%20%20%20cursor%3A%20text%3B%0A%20%20%20position%3A%20relative%3B%0A%20%20%20color%3A%234169E1%3B%0A%7D%0A%0Ah1%3Ahover%20a%2Eanchor%2C%20h2%3Ahover%20a%2Eanchor%2C%20h3%3Ahover%20a%2Eanchor%2C%20h4%3Ahover%20a%2Eanchor%2C%20h5%3Ahover%20a%2Eanchor%2C%20h6%3Ahover%20a%2Eanchor%20%7B%0A%20%20%20text%2Ddecoration%3A%20none%3B%20%7D%0A%0Ah1%20tt%2C%20h1%20code%20%7B%0A%20%20%20font%2Dsize%3A%20inherit%3B%20%7D%0A%0Ah2%20tt%2C%20h2%20code%20%7B%0A%20%20%20font%2Dsize%3A%20inherit%3B%20%7D%0A%0Ah3%20tt%2C%20h3%20code%20%7B%0A%20%20%20font%2Dsize%3A%20inherit%3B%20%7D%0A%0Ah4%20tt%2C%20h4%20code%20%7B%0A%20%20%20font%2Dsize%3A%20inherit%3B%20%7D%0A%0Ah5%20tt%2C%20h5%20code%20%7B%0A%20%20%20font%2Dsize%3A%20inherit%3B%20%7D%0A%0Ah6%20tt%2C%20h6%20code%20%7B%0A%20%20%20font%2Dsize%3A%20inherit%3B%20%7D%0A%0Ah1%20%7B%0A%20%20%20margin%20%3A%2040px%205px%2040px%205px%3B%0A%20%20%20font%2Dsize%3A%2028px%3B%0A%20%20%20border%2Dtop%3A1px%20solid%20black%3B%0A%20%20%20padding%2Dtop%3A40px%3B%0A%20%20%20width%3A1004px%3B%0A%20%7D%0A%0Ah2%20%7B%0A%20%20%20font%2Dsize%3A%2024px%3B%0A%20%20%20border%2Dbottom%3A%201px%20solid%20%23cccccc%3B%0A%7D%0A%0Ah3%20%7B%0A%20%20%20font%2Dsize%3A%2018px%3B%20%7D%0A%0Ah4%20%7B%0A%20%20%20font%2Dsize%3A%2016px%3B%20%7D%0A%0Ah5%20%7B%0A%20%20%20font%2Dsize%3A%2014px%3B%20%7D%0A%0Ah6%20%7B%0A%20%20%20color%3A%20%23777777%3B%0A%20%20%20font%2Dsize%3A%2014px%3B%20%0A%20%7D%0A%0Ap%2C%20blockquote%2C%20ol%2C%20dl%2C%20li%2C%20table%2C%20pre%20%7B%0A%20%20%20margin%3A%2015px%200%3B%20%20%20%7D%0A%20%20%20%0Aem%7B%0A%09font%2Dfamily%3AHelvetica%2C%20%27Hiragino%20Sans%20GB%27%2C%20%27Microsoft%20Yahei%27%2C%20%27%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91%27%2C%20Arial%2C%20sans%2Dserif%3B%0A%09font%2Dsize%3A16px%3B%0A%09color%3A%20%23464C5C%3B%0A%09background%2Dcolor%3A%23f5f5f5%3B%0A%09font%2Dstyle%3Anormal%3B%0A%7D%0A%0Abody%20%3E%20h2%3Afirst%2Dchild%20%7B%0A%20%20%20margin%2Dtop%3A%200%3B%0A%20%20%20padding%2Dtop%3A%200%3B%20%7D%0Abody%20%3E%20h1%3Afirst%2Dchild%20%7B%0A%20%20%20margin%2Dtop%3A%200%3B%0A%20%20%20padding%2Dtop%3A%200%3B%20%7D%0Abody%20%3E%20h1%3Afirst%2Dchild%20%2B%20h2%20%7B%0A%20%20%20margin%2Dtop%3A%200%3B%0A%20%20%20padding%2Dtop%3A%200%3B%20%7D%0Abody%20%3E%20h3%3Afirst%2Dchild%2C%20body%20%3E%20h4%3Afirst%2Dchild%2C%20body%20%3E%20h5%3Afirst%2Dchild%2C%20body%20%3E%20h6%3Afirst%2Dchild%20%7B%0A%20%20%20margin%2Dtop%3A%200%3B%0A%20%20%20padding%2Dtop%3A%200%3B%20%7D%0A%0Aa%3Afirst%2Dchild%20h1%2C%20a%3Afirst%2Dchild%20h2%2C%20a%3Afirst%2Dchild%20h3%2C%20a%3Afirst%2Dchild%20h4%2C%20a%3Afirst%2Dchild%20h5%2C%20a%3Afirst%2Dchild%20h6%20%7B%0A%20%20%20margin%2Dtop%3A%200%3B%0A%20%20%20padding%2Dtop%3A%200%3B%20%7D%0A%0Ah1%20p%2C%20h2%20p%2C%20h3%20p%2C%20h4%20p%2C%20h5%20p%2C%20h6%20p%20%7B%0A%20%20%20margin%2Dtop%3A%200%3B%20%7D%0A%0Ali%20p%2Efirst%20%7B%0A%20%20%20display%3A%20inline%2Dblock%3B%20%7D%0Ali%20%7B%0A%20%20%20margin%3A%200%3B%20%7D%0Aul%2C%20ol%20%7B%0A%20%20%20padding%2Dleft%3A%2020px%3B%20%7D%0A%20%20%20%0Aol%20li%7B%0A%20%20%20margin%2Dleft%3A%2030px%3B%0A%7D%0A%0Aul%20%3Afirst%2Dchild%2C%20ol%20%3Afirst%2Dchild%20%7B%0A%20%20%20margin%2Dtop%3A%200%3B%0A%20%20%20%7D%0A%0Adl%20%7B%0A%20%20%20padding%3A%200%3B%20%7D%0Adl%20dt%20%7B%0A%20%20%20font%2Dsize%3A%2014px%3B%0A%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%20font%2Dstyle%3A%20italic%3B%0A%20%20%20padding%3A%200%3B%0A%20%20%20margin%3A%2015px%200%205px%3B%20%7D%0Adl%20dt%3Afirst%2Dchild%20%7B%0A%20%20%20padding%3A%200%3B%20%7D%0Adl%20dt%20%3E%20%3Afirst%2Dchild%20%7B%0A%20%20%20margin%2Dtop%3A%200%3B%20%7D%0Adl%20dt%20%3E%20%3Alast%2Dchild%20%7B%0A%20%20%20margin%2Dbottom%3A%200%3B%20%7D%0Adl%20dd%20%7B%0A%20%20%20margin%3A%200%200%2015px%3B%0A%20%20%20padding%3A%200%2015px%3B%20%7D%0Adl%20dd%20%3E%20%3Afirst%2Dchild%20%7B%0A%20%20%20margin%2Dtop%3A%200%3B%20%7D%0Adl%20dd%20%3E%20%3Alast%2Dchild%20%7B%0A%20%20%20margin%2Dbottom%3A%200%3B%20%7D%0A%0Ablockquote%20%7B%0A%20%20%20border%2Dleft%3A%204px%20solid%20%23ddd%3B%0A%20%20%20padding%3A%200%2015px%3B%0A%20%20%20color%3A%20%23777777%3B%20%7D%0Ablockquote%20%3E%20%3Afirst%2Dchild%20%7B%0A%20%20%20margin%2Dtop%3A%200%3B%20%7D%0Ablockquote%20%3E%20%3Alast%2Dchild%20%7B%0A%20%20%20margin%2Dbottom%3A%200%3B%20%7D%0Ablockquote%20%7B%0A%20%20%20%20display%3A%20block%3B%0A%20%20%20%20%2Dwebkit%2Dmargin%2Dbefore%3A%201em%3B%0A%20%20%20%20%2Dwebkit%2Dmargin%2Dafter%3A%201em%3B%0A%20%20%20%20%2Dwebkit%2Dmargin%2Dstart%3A%2040px%3B%0A%20%20%20%20%2Dwebkit%2Dmargin%2Dend%3A%2040px%3B%0A%20%20%20%20border%2Dleft%3A%203px%20solid%20%23a7b5bf%3B%0A%20%20%20%20color%3A%20%23464C5C%3B%0A%20%20%20%20font%2Dstyle%3A%20normal%3B%0A%20%20%20%20margin%3A%204px%200%2012px%200%3B%0A%20%20%20%20padding%3A%208px%2012px%3B%0A%20%20%20%20background%2Dcolor%3A%20%23F8F9FC%3B%0A%7D%0A%0A%0Atable%20%7B%0A%20%20%20padding%3A0%3Bborder%2Dcollapse%3A%20collapse%3B%20width%3A90%25%3Bmargin%3A10px%20auto%3B%7D%0Atable%20tr%20%7B%0A%20%20%20border%2Dtop%3A%201px%20solid%20%23cccccc%3B%0A%20%20%20background%2Dcolor%3A%20white%3B%0A%20%20%20margin%3A%200%3B%0A%20%20%20padding%3A%200%3B%20%7D%0Atable%20tr%3Anth%2Dchild%282n%29%20%7B%0A%20%20%20background%2Dcolor%3A%20%23f8f8f8%3B%20%7D%0Atable%20tr%20th%20%7B%0A%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%20border%3A%201px%20solid%20%23cccccc%3B%0A%20%20%20margin%3A%200%3B%0A%20%20%20padding%3A%206px%2013px%3Btext%2Dalign%3Acenter%3B%20%7D%0Atable%20tr%20td%20%7B%0A%20%20%20border%3A%201px%20solid%20%23cccccc%3B%0A%20%20%20margin%3A%200%3B%0A%20%20%20padding%3A%206px%2013px%3Btext%2Dalign%3Acenter%3B%20%7D%0Atable%20tr%20th%20%3Afirst%2Dchild%2C%20table%20tr%20td%20%3Afirst%2Dchild%20%7B%0A%20%20%20margin%2Dtop%3A%200%3B%20%7D%0Atable%20tr%20th%20%3Alast%2Dchild%2C%20table%20tr%20td%20%3Alast%2Dchild%20%7B%0A%20%20%20margin%2Dbottom%3A%200%3B%20%7D%0A%0Aimg%20%7B%0A%20%20%20max%2Dwidth%3A%20100%25%3B%20%7D%0A%0Adiv%2Efigure%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%20%20%2F%2Aborder%3A%20thin%20silver%20solid%3B%2A%2F%0A%20%20margin%3A%200%2E5em%3B%0A%20%20padding%3A%200%2E5em%3B%0A%7D%0Adiv%2Efigure%20p%20%7B%0A%20%20%20%20font%2Dweight%3Abold%3B%0A%20%20%20%20font%2Dsize%3A90%25%3B%0A%2F%2A%20%20%20%20margin%2Dleft%3A%20auto%3B%0A%20%20%20%20margin%2Dright%3A%20auto%3B%20%2A%2F%0A%20%20%20%20text%2Dalign%3A%20center%3B%0A%7D%0Aimg%2Escaled%20%7B%0A%20%20width%3A%20100%25%3B%0A%7D%0A%0Aspan%2Eframe%20%7B%0A%20%20%20display%3A%20block%3B%0A%20%20%20overflow%3A%20hidden%3B%20%7D%0Aspan%2Eframe%20%3E%20span%20%7B%0A%20%20%20border%3A%201px%20solid%20%23dddddd%3B%0A%20%20%20display%3A%20block%3B%0A%20%20%20float%3A%20left%3B%0A%20%20%20overflow%3A%20hidden%3B%0A%20%20%20margin%3A%2013px%200%200%3B%0A%20%20%20padding%3A%207px%3B%0A%20%20%20width%3A%20auto%3B%20%7D%0Aspan%2Eframe%20span%20img%20%7B%0A%20%20%20display%3A%20block%3B%0A%20%20%20float%3A%20left%3B%20%7D%0Aspan%2Eframe%20span%20span%20%7B%0A%20%20%20clear%3A%20both%3B%0A%20%20%20color%3A%20%23333333%3B%0A%20%20%20display%3A%20block%3B%0A%20%20%20padding%3A%205px%200%200%3B%20%7D%0Aspan%2Ealign%2Dcenter%20%7B%0A%20%20%20display%3A%20block%3B%0A%20%20%20overflow%3A%20hidden%3B%0A%20%20%20clear%3A%20both%3B%20%7D%0Aspan%2Ealign%2Dcenter%20%3E%20span%20%7B%0A%20%20%20display%3A%20block%3B%0A%20%20%20overflow%3A%20hidden%3B%0A%20%20%20margin%3A%2013px%20auto%200%3B%0A%20%20%20text%2Dalign%3A%20center%3B%20%7D%0Aspan%2Ealign%2Dcenter%20span%20img%20%7B%0A%20%20%20margin%3A%200%20auto%3B%0A%20%20%20text%2Dalign%3A%20center%3B%20%7D%0Aspan%2Ealign%2Dright%20%7B%0A%20%20%20display%3A%20block%3B%0A%20%20%20overflow%3A%20hidden%3B%0A%20%20%20clear%3A%20both%3B%20%7D%0Aspan%2Ealign%2Dright%20%3E%20span%20%7B%0A%20%20%20display%3A%20block%3B%0A%20%20%20overflow%3A%20hidden%3B%0A%20%20%20margin%3A%2013px%200%200%3B%0A%20%20%20text%2Dalign%3A%20right%3B%20%7D%0Aspan%2Ealign%2Dright%20span%20img%20%7B%0A%20%20%20margin%3A%200%3B%0A%20%20%20text%2Dalign%3A%20right%3B%20%7D%0Aspan%2Efloat%2Dleft%20%7B%0A%20%20%20display%3A%20block%3B%0A%20%20%20margin%2Dright%3A%2013px%3B%0A%20%20%20overflow%3A%20hidden%3B%0A%20%20%20float%3A%20left%3B%20%7D%0Aspan%2Efloat%2Dleft%20span%20%7B%0A%20%20%20margin%3A%2013px%200%200%3B%20%7D%0Aspan%2Efloat%2Dright%20%7B%0A%20%20%20display%3A%20block%3B%0A%20%20%20margin%2Dleft%3A%2013px%3B%0A%20%20%20overflow%3A%20hidden%3B%0A%20%20%20float%3A%20right%3B%20%7D%0Aspan%2Efloat%2Dright%20%3E%20span%20%7B%0A%20%20%20display%3A%20block%3B%0A%20%20%20overflow%3A%20hidden%3B%0A%20%20%20margin%3A%2013px%20auto%200%3B%0A%20%20%20text%2Dalign%3A%20right%3B%20%7D%0A%0Acode%2C%0Akbd%2C%0Apre%2C%0Asamp%20%7B%0A%20%20font%2Dfamily%3A%20Menlo%2C%20Monaco%2C%20Consolas%2C%20%22Courier%20New%22%2C%20monospace%3B%0A%7D%0Acode%20%7B%0A%20%20padding%3A%202px%204px%3B%0A%20%20font%2Dsize%3A%20100%25%3B%0A%20%20color%3A%20%23990066%3B%0A%20%20background%2Dcolor%3A%20%23f5f5f5%3B%0A%20%20border%2Dradius%3A%204px%3B%0A%7D%0Akbd%20%7B%0A%20%20padding%3A%202px%204px%3B%0A%20%20font%2Dsize%3A%2090%25%3B%0A%20%20color%3A%20%23fff%3B%0A%20%20background%2Dcolor%3A%20%23333%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20%2Dwebkit%2Dbox%2Dshadow%3A%20inset%200%20%2D1px%200%20rgba%280%2C%200%2C%200%2C%20%2E25%29%3B%0A%20%20%20%20%20%20%20%20%20%20box%2Dshadow%3A%20inset%200%20%2D1px%200%20rgba%280%2C%200%2C%200%2C%20%2E25%29%3B%0A%7D%0Akbd%20kbd%20%7B%0A%20%20padding%3A%200%3B%0A%20%20font%2Dsize%3A%20100%25%3B%0A%20%20%2Dwebkit%2Dbox%2Dshadow%3A%20none%3B%0A%20%20%20%20%20%20%20%20%20%20box%2Dshadow%3A%20none%3B%0A%7D%0Apre%20%7B%0A%20%20%20%20background%3A%20rgba%2871%2C87%2C120%2C0%2E08%29%3B%0A%20%20%20%20display%3A%20block%3B%0A%20%20%20%20color%3A%20%23000%3B%0A%20%20%20%20overflow%3A%20auto%3B%0A%20%20%20%20padding%3A%2012px%3B%0A%20%20%20%20border%2Dradius%3A%203px%3B%0A%7D%0Apre%20code%20%7B%0A%20%20padding%3A%200%3B%0A%20%20font%2Dsize%3A%20inherit%3B%0A%20%20color%3A%20inherit%3B%0A%20%20white%2Dspace%3A%20pre%2Dwrap%3B%0A%20%20background%2Dcolor%3A%20transparent%3B%0A%20%20border%2Dradius%3A%200%3B%0A%20%20line%2Dheight%3A1em%3B%0A%7D%0A%0Asup%20%7B%0A%20%20%20font%2Dsize%3A%200%2E83em%3B%0A%20%20%20vertical%2Dalign%3A%20super%3B%0A%20%20%20line%2Dheight%3A%200%3B%0A%7D%0A%2A%20%7B%0A%09%20%2Dwebkit%2Dprint%2Dcolor%2Dadjust%3A%20exact%3B%0A%7D%0A%0A%40media%20screen%20and%20%28min%2Dwidth%3A%201064px%29%20%7B%0A%20%20%20body%20%7B%0A%20%20%20%20%20%20width%3A1004px%3B%0A%20%20%20%20%20%20margin%3A0%20auto%3B%0A%20%20%20%7D%0A%7D%0A%40media%20print%20%7B%0A%09%20table%2C%20pre%20%7B%0A%09%09%20%20page%2Dbreak%2Dinside%3A%20avoid%3B%0A%09%20%7D%0A%09%20pre%20%7B%0A%09%09%20%20word%2Dwrap%3A%20break%2Dword%3B%0A%09%20%7D%0A%7D%0A%0A" rel="stylesheet" type="text/css" />
+  <link href="data:text/css,%2Eacco%5Ftitle%20%7B%0A%20%20%20%20line%2Dheight%3A26px%3B%0A%20%20%20%20padding%3A5px%200%205px%2020px%3B%0A%20%20%20%20font%2Dsize%3A14px%3B%0A%20%20%20%20background%2Dcolor%3A%23cadbeb%3B%0A%20%20%20%20border%2Dbottom%3A3px%20solid%20%23fff%3B%0A%20%20%20%20border%2Dradius%3A8px%3B%0A%7D%0A%2Eacco%5Ftitle%5Fon%20%7B%0A%20%20%20%20background%2Dcolor%3A%23beceeb%3B%0A%20%20%20%20border%2Dradius%3A8px%3B%0A%7D%0A%2Eacco%5Fcontent%20%7B%0A%20%20%20%20height%3A0%3B%0A%20%20%20%20padding%3A0%2010px%3B%0A%20%20%20%20%2Dwebkit%2Dtransition%3A%20all%200%2E5s%20ease%3B%0A%20%20%20%20%2Dmoz%2Dtransition%3A%20all%200%2E5s%20ease%3B%0A%20%20%20%20%2Do%2Dtransition%3A%20all%200%2E5s%20ease%3B%0A%20%20%20%20transition%3A%20all%200%2E5s%20ease%3B%0A%20%20%20%20overflow%3Ahidden%3B%0A%7D%0A" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="feixun">
+<img id="feixunpic" src="data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAL0AAAApCAYAAABgIChlAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MDlGRkZBRTM4MTEwMTFFNUIzMjdDQkM5OTQxNDA3MDciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MDlGRkZBRTQ4MTEwMTFFNUIzMjdDQkM5OTQxNDA3MDciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDowOUZGRkFFMTgxMTAxMUU1QjMyN0NCQzk5NDE0MDcwNyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowOUZGRkFFMjgxMTAxMUU1QjMyN0NCQzk5NDE0MDcwNyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgSR7FAAABl6SURBVHja7F0JmBXF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" />
+</div>
+<div id="title"></div>
+<div id="hst">版本历史</div>
+<div id="history"></div>
+
+<div id="TOC">
+<h1>目录</h1>
+<div id="TOC_CONTENT">
+<ul>
+<li><a href="#术语"><span class="toc-section-number">1</span> 术语</a></li>
+<li><a href="#概述"><span class="toc-section-number">2</span> 概述</a></li>
+<li><a href="#一些值得阅读的文档"><span class="toc-section-number">3</span> 一些值得阅读的文档</a></li>
+<li><a href="#典型工作流程"><span class="toc-section-number">4</span> 典型工作流程</a><ul>
+<li><a href="#选择操作系统"><span class="toc-section-number">4.1</span> 选择操作系统</a></li>
+<li><a href="#安装依赖工具"><span class="toc-section-number">4.2</span> 安装依赖工具</a></li>
+<li><a href="#编译"><span class="toc-section-number">4.3</span> 编译</a></li>
+<li><a href="#烧机"><span class="toc-section-number">4.4</span> 烧机</a></li>
+<li><a href="#开发调试"><span class="toc-section-number">4.5</span> 开发调试</a><ul>
+<li><a href="#通过串口"><span class="toc-section-number">4.5.1</span> 通过串口</a></li>
+<li><a href="#通过ssh"><span class="toc-section-number">4.5.2</span> 通过ssh</a></li>
+<li><a href="#通过telnet"><span class="toc-section-number">4.5.3</span> 通过telnet</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#sop软件框架特性"><span class="toc-section-number">5</span> SOP软件框架特性</a></li>
+<li><a href="#重要目录及用途"><span class="toc-section-number">6</span> 重要目录及用途</a></li>
+<li><a href="#package-的编译流程"><span class="toc-section-number">7</span> Package 的编译流程</a></li>
+<li><a href="#模块开发howto"><span class="toc-section-number">8</span> 模块开发Howto</a><ul>
+<li><a href="#开发一个新的package"><span class="toc-section-number">8.1</span> 开发一个新的package</a></li>
+<li><a href="#修改一个旧的package"><span class="toc-section-number">8.2</span> 修改一个旧的package</a></li>
+<li><a href="#机型的特性定制"><span class="toc-section-number">8.3</span> 机型的特性定制</a></li>
+<li><a href="#实现新的特性"><span class="toc-section-number">8.4</span> 实现新的特性</a><ul>
+<li><a href="#添加功能特性"><span class="toc-section-number">8.4.1</span> 添加功能特性</a></li>
+<li><a href="#添加机型特性"><span class="toc-section-number">8.4.2</span> 添加机型特性</a></li>
+<li><a href="#添加内核特性"><span class="toc-section-number">8.4.3</span> 添加内核特性</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#sop注意事项"><span class="toc-section-number">9</span> SOP注意事项</a></li>
+</ul>
+</div>
+</div>
+<div id="main">
+<table>
+<thead>
+<tr class="header">
+<th align="left">修订版本</th>
+<th align="left">负责人</th>
+<th align="left">日期</th>
+<th align="left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1.0</td>
+<td align="left">欧阳雄弈</td>
+<td align="left">2016.08.11</td>
+<td align="left">补全文档，并分离部分章节到其他文档</td>
+</tr>
+<tr class="even">
+<td align="left">0.3</td>
+<td align="left">欧阳雄弈</td>
+<td align="left">2016.05.05</td>
+<td align="left">添加烧机说明</td>
+</tr>
+<tr class="odd">
+<td align="left">0.2</td>
+<td align="left">欧阳雄弈</td>
+<td align="left">2016.04.11</td>
+<td align="left">添加一些参考提交</td>
+</tr>
+<tr class="even">
+<td align="left">0.1</td>
+<td align="left">欧阳雄弈</td>
+<td align="left">2016.03.30</td>
+<td align="left">创建初稿</td>
+</tr>
+</tbody>
+</table>
+<h1 id="术语"><span class="header-section-number">1</span> 术语</h1>
+<dl>
+<dt>SOP</dt>
+<dd><p>SOHO OpenWrt Platform。为我司基于OpenWrt设计的产品化的路由软件平台。</p>
+</dd>
+<dt>LKM</dt>
+<dd><p>Linux Kernel Module</p>
+</dd>
+</dl>
+<h1 id="概述"><span class="header-section-number">2</span> 概述</h1>
+<p>SOP是基于 MTK OpenWrt SDK 的路由软件平台，本文面向此平台上的软件开发者，介绍了平台的一些基础开发知识、开发和使用方法以及平台开发规范。</p>
+<p>对于平台的整体设计思想可以阅读<a href="./SOP搭建方案.html">《SOP搭建方案》</a>一文。</p>
+<h1 id="一些值得阅读的文档"><span class="header-section-number">3</span> 一些值得阅读的文档</h1>
+<p><em>注：我们对编译系统、系统工作流程进行了不少修改以适应我们的需求，所以官方文档的一些内容不能完全参考，特别是一些编译构建相关的内容，但对于了解OpenWrt系统而言，这些文档无疑仍是最有价值的）</em></p>
+<ul>
+<li><a href="http://downloads.openwrt.org/kamikaze/docs/openwrt.html">《OpenWrt manual》</a>，通过此文：
+<ul>
+<li>可以了解到如何配置一台OpenWrt系统的路由</li>
+<li>可以了解到如何开发OpenWrt系统</li>
+</ul></li>
+<li><a href="https://wiki.openwrt.org/doc/playground/developer">《OpenWrt Developer Guide》</a>，OpenWrt官方的开发指南</li>
+</ul>
+<h1 id="典型工作流程"><span class="header-section-number">4</span> 典型工作流程</h1>
+<p>当你已经有权限得到SOP源码后，便开启了你的SOP平台开发之旅，但是在此之前，你首先要确认自己的开发环境是否满足平台开发要求，跟着下面几个小节介绍的内容去实践，你应该就具备SOP的开发环境了</p>
+<h2 id="选择操作系统"><span class="header-section-number">4.1</span> 选择操作系统</h2>
+<p>统一开发环境，减少不必要的麻烦，请安装<strong>64位</strong>ubuntu14.04的操作系统</p>
+<h2 id="安装依赖工具"><span class="header-section-number">4.2</span> 安装依赖工具</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> apt-get install git-core build-essential subversion libncurses5-dev zlib1g-dev gawk flex libssl-dev gcc-multilib gettext libiconv-hook-dev zlib1g-dev libncurses5-dev bison flex sharutils</code></pre>
+<h2 id="编译"><span class="header-section-number">4.3</span> 编译</h2>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">source</span> build/envsetup.sh
+
+<span class="co"># 这时候需要选择编译机型，例如输入&quot;K2&quot;</span>
+<span class="kw">K2</span>
+
+<span class="co"># 编译整机固件</span>
+<span class="kw">build</span>
+
+<span class="co">#### 以下为一些其他常用的命令或者tips ####</span>
+
+<span class="co"># 查看其他开发相关命令</span>
+<span class="kw">help</span>
+
+<span class="co"># build/logs 下保存了每次整机编译日志，用于调试和解决编译问题</span>
+
+<span class="co"># 需要编译其他机型时，可以使用下面的命令重新选择机型</span>
+<span class="kw">chooseproduct</span>
+
+<span class="co"># 软件负责人通过下面的命令定制机型的特性</span>
+<span class="kw">configproduct</span>
+
+<span class="co"># 编译单独的package或者内核</span>
+<span class="kw">mmm</span> netifd
+<span class="kw">mmm</span> -c linux
+
+<span class="co"># 修改不生效或者遇到一些莫名其妙的编译错误时，往往是因为你不理解SOP的编译流程导致，此时最简单的方式是编译时添加`-c`参数，这会在编译前清空中间产物，例如</span>
+<span class="kw">build</span> -c
+<span class="kw">mmm</span> -c xxx</code></pre>
+<h2 id="烧机"><span class="header-section-number">4.4</span> 烧机</h2>
+<p>在烧机之前，你要知道SOP固件的Flash分区，示意图如下</p>
+<pre><code>+-----------------+ -----
+|                 |   ^
+|                 |   |
+|   Bootloader    | 0x30000
+|                 |   |
+|                 |   v   ---&gt; 固定192KB，作为bootloader
++-----------------+ -----
+|                 |   ^
+|                 |   |
+|    Config       | 0x10000
+|                 |   |
+|                 |   v   ---&gt; 固定64KB，保留
++-----------------+ -----
+|                 |   ^
+|                 |   |
+|    Factory      | 0x10000
+|                 |   |
+|                 |   v   ---&gt; 固定64KB，存放无线校准参数
++-----------------+ -----
+|                 |   ^
+|                 |   |
+|    firmware     |  xxx
+|                 |   |
+|                 |   v   ---&gt; 除掉前面几个已知的分区，Flash上剩余的空间全给此分区
++-----------------+ -----</code></pre>
+<p>firmware分区又被分为几部分，如下</p>
+<pre><code>+-----------------+ -----
+|                 |   ^
+|                 |   |
+|  kernel image   |  xxx
+|                 |   |
+|                 |   v   ---&gt; 大小不固定，根据编译时实际大小决定，存放linux内核镜像
++-----------------+ -----
+|                 |   ^
+|                 |   |
+|     rootfs      |  xxx
+|                 |   |
+|                 |   v   ---&gt; 大小不固定，根据编译时实际大小决定，属于文件系统的只读部分
++-----------------+ -----
+|                 |   ^
+|                 |   |
+|   rootfs_data   |  xxx
+|                 |   |
+|                 |   v   ---&gt; firmware分区剩余的部分全给此分区，属于文件系统的可读写部分
++-----------------+ -----</code></pre>
+<p>记不住分区的，在路由的终端下执行命令<code>cat /proc/mtd</code>可以查到</p>
+<p>OK，现在回到编译。SOP源码编译生成的<strong>分区镜像</strong>会放在<code>&lt;src_root&gt;/bin/ramips/</code>，其中</p>
+<ul>
+<li><code>openwrt-ramips-K2-u-boot.bin</code>为Bootloader分区</li>
+<li><code>openwrt-ramips-mt7620-mt7620-squashfs-sysupgrade.bin</code>为firmware分区</li>
+</ul>
+<blockquote>
+<p>【注】方案不同，编译产物名称可能稍有差异</p>
+</blockquote>
+<p>我们需要更新的一般也就只有上面提到的两个分区</p>
+<p>烧机方法是在开机启动阶段（bootloader刚起来），出现如下<strong>操作提示</strong>时，快速输入数字，并按照提示往下执行</p>
+<pre><code>Please choose the operation:
+   1: Load system code to SDRAM via TFTP.
+   2: Load system code then write to Flash via TFTP.
+   3: Boot system code via Flash (default).
+   4: Entr boot command line interface.
+   6: Load all then write to Flash via TFTP.
+   7: Load Boot Loader code then write to Flash via Serial.
+   9: Load Boot Loader code then write to Flash via TFTP.</code></pre>
+<ul>
+<li>输入 “2” 即为烧写firmware</li>
+<li>输入 “9” 即为烧写Bootloader</li>
+</ul>
+<p>对于<strong>正式固件的发布</strong>而言，相关文件会放到<code>&lt;src_root&gt;/bin/ramips/image/</code>，这里面的文件与前面提到的分区镜像是不同的，其中：</p>
+<ul>
+<li><code>SOP-ramips-mt7620-K2-local-debug.bin</code>为发布给用户的升级固件。文件内部有校验数据，为了防刷hW</li>
+<li><code>SOP-ramips-mt7620-K2-local-debug.fac</code>为发布给工厂的编程器镜像，文件中的每个字节与Flash一一对应</li>
+</ul>
+<h2 id="开发调试"><span class="header-section-number">4.5</span> 开发调试</h2>
+<p>进入开发板有三种方法，但各自有一些前置条件，下面的章节分别进行介绍</p>
+<h3 id="通过串口"><span class="header-section-number">4.5.1</span> 通过串口</h3>
+<p>串口是比较通用的一种进入开发板终端的方式，通过串口通信不依赖网络，连接也十分稳定，但前提是需要引出开发板的UART口，一般成品样机由于已经装上壳体，就不太适用了。</p>
+<p>硬件连接就绪后，使用工具即可进入开发板终端，Windows下一般使用SecureCRT，Linux下一般使用minicom</p>
+<p>在此简单介绍minicom的配置方法：</p>
+<ol style="list-style-type: decimal">
+<li>安装，<code>sudo apt-get install minicom</code></li>
+<li>打开程序，<code>sudo minicom</code></li>
+<li>一般第一次打开会自动进入配置页面，其他时候你也可以通过&quot;CTRL-A+o&quot;重新进入，你需要修改的
+<ul>
+<li>&quot;Serial port setup&quot; -&gt;
+<ul>
+<li>&quot;Bps/Par/Bits&quot; 改为 &quot;57600 8N1&quot;</li>
+<li>&quot;Hardware Flow Control&quot; 改为 &quot;No&quot;</li>
+</ul></li>
+<li>&quot;Save setup as dfl&quot; 将刚才的修改设为默认配置</li>
+</ul></li>
+<li>重启minicom</li>
+</ol>
+<h3 id="通过ssh"><span class="header-section-number">4.5.2</span> 通过ssh</h3>
+<p>debug类型固件<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>会预置ssh服务，可以通过ssh进入开发板的终端，默认的账户名和密码均为&quot;root&quot;</p>
+<h3 id="通过telnet"><span class="header-section-number">4.5.3</span> 通过telnet</h3>
+<p>release类型固件也能使用，非常通用，但是我们的开发中很少使用，原因如下- 由于既然用户的固件也能开启此后门，所以权限管控比较严格，激活此后门需要找相关人员获得相关工具- 都是通过网络连入开发板终端，但不如ssh方便，ssh有文件传输协议scp，可以利用工具（Linux下使用scp命令，Windows下使用WinSCP）与开发板互传文件</p>
+<h1 id="sop软件框架特性"><span class="header-section-number">5</span> SOP软件框架特性</h1>
+<p>SOP基于OpenWrt，并保持OpenWrt的大部分框架特性，这里引用一句非常简短的话来概括这个框架：</p>
+<blockquote>
+<p>万物即包子（<strong>Package</strong>），钩子（<strong>Hook</strong>）满天飞</p>
+</blockquote>
+<p><strong>Package</strong> 的含义是：OpenWrt把每个功能模块都划分为一个 Package，从host上的toolchain，到target上的bootloader、kernel、LKM、各种daemon、Web页面框架等。OpenWrt为每个 Package 提供一个Makefile以适配OpenWrt的编译系统，同时为每个 Package 提供源码补丁以适配OpenWrt嵌入式Linux系统，最后为 Package 提供OpenWrt的包管理系统。OpenWrt基于Buildroot编译框架，并结合这一系列的工作，将各种开源项目有机整合到一起，构建了一个强大的开源路由系统。</p>
+<p><strong>Hook</strong> 的含义是：OpenWrt无论在编译系统还是软件框架上都设置了非常多的钩子点（我想大部分思想实际都是发行版Linux上的延续），通过在这些钩子点上做特定的处理，得以让OpenWrt在一套软件上支持成百上千种机型，这些机型可以是不同的芯片方案，拥有不同的硬件规格。</p>
+<h1 id="重要目录及用途"><span class="header-section-number">6</span> 重要目录及用途</h1>
+<blockquote>
+<p>【注】下文中“[ ]”表示可变的, &quot;*&quot;表示开发中可能经常接触的</p>
+</blockquote>
+<pre><code>├── phicomm_docs        --SOP文档
+├── bin/
+    ├── [ramips]/       --存放最终的固件
+        ├── packages/   --存放编译生成的ipk
+├── build/              --我司添加的目录，用于实现机型编译
+    ├── logs/           --历史编译日志，个别时候对于排错很有帮助
+    ├── products/       --存放所有机型配置的目录
+        ├── [K2]/       --具体机型目录
+├── build_dir/          --make时创建，所有源码最终被拷贝到这里进行编译，未打包的产物也在这里
+    ├── target-[XXX]/  --略
+        ├── *root-[ramips]  --最终根文件系统，基本等于登陆路由界面后执行&quot;ls /&quot;，下文统一称为rootfs
+├── dl/                 --原始的源码压缩包会放到这里
+├── scripts/            --编译系统或者开发会用到的脚本工具
+    ├── phicomm/        --存放我司的脚本工具
+├── include/            --↓
+├── rules.mk            --↓
+├── Makefile            --这三者基本就构成了OpenWrt的编译系统，了解编译流程、查找变量定义就应该在其中搜索
+├── *package/           --所有package的源码以及配置文件都放到这里
+    ├── phicomm/        --我司写的package
+├── staging_dir/        --存放编译的中间件，例如某个package安装的头文件、so库都会放到这里供其他package编译使用
+├── target/
+    ├── generic         --基于OpenWrt的内核和系统文件修改，编译时覆盖编译路径下的文件（第一层覆盖）
+    ├── [ramips]        --基于芯片方案和机型的内核和文件系统修改（第二层覆盖）
+├── tmp/                --收集package的Makefile信息，构建编译依赖关系</code></pre>
+<h1 id="package-的编译流程"><span class="header-section-number">7</span> Package 的编译流程</h1>
+<p>对于功能开发而言，理解这一点十分重要。</p>
+<p>OpenWrt的编译系统十分复杂，很多地方设计得非常好，这才能支撑它一套代码支持几十种路由厂商的上百款路由，但其中的一些设计对于我们开发而言比较冗余，会降低我们的开发效率，所以我们对这部分进行了修改。当前package的编译流程如下（以busybox为例）：</p>
+<ol style="list-style-type: decimal">
+<li><p>主Makefile执行<code>packages/utils/busybox/</code>下的Makefile，获得一些变量的定义，使busybox这个开源项目能被OpenWrt的编译系统编译，而整个过程你并不需要修改busybox原工程携带的Makefile</p></li>
+<li><p>拷贝源码到编译路径，存在两种方式：2'. 将<code>dl/</code>目录下的<code>busybox-1.22.1.tar.bz2</code>解压获得源码，打上OpenWrt提供的patch（位于<code>package/utils/busybox/patches/</code>），最后将源码拷贝到<code>build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/busybox-1.22.1/</code></p>
+<p>2''. 如果都以上面这种方式进行开发，可以发现我们是很难对源码进行修改和定制的，因为源码是从压缩包内获得，任何修改都是以patch的形式实现，不便于开发和代码评审，这是我们不能接受的。所以一旦我们需要对开源项目的package进行定制，<strong>我们会将整个项目的代码解压出来入库</strong>，具体会在<a href="#修改一个现有package">&quot;修改一个现有package&quot;</a>中介绍</p></li>
+<li><p>在<code>build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/busybox-1.22.1/</code>中编译</p></li>
+<li><p>生成产物。重点关注编译目录下的<code>ipkg-ramips_24kec</code>（决定哪些东西打包到ipk）和<code>ipkg-install</code>（决定哪些东西安装到rootfs）。目录中一般都包含有一些配置文件和脚本是服务于OpenWrt系统的，这些文件是从<code>packages/utils/busybox/[config|files]/</code>拷贝而来</p></li>
+<li><p>对于一个模块而言，编译属性是“m”代表可安装卸载的模块，会打包成ipk（ipk就是OpenWrt系统的安装包，位于<code>bin/ramips/packages/</code>，我们可以拷贝到开发板上使用opkg命令安装）；编译属性是“y”代表编入固件，既会默认预置在固件文件系统中，同时也会生成ipk放到<code>bin/ramips/packages/</code>（这一点对于功能开发而言简直<strong>意义非凡</strong>，我们开发调试单一功能时，不再需要每次耗费大量的时间重编固件和烧机）</p></li>
+</ol>
+<h1 id="模块开发howto"><span class="header-section-number">8</span> 模块开发Howto</h1>
+<h2 id="开发一个新的package"><span class="header-section-number">8.1</span> 开发一个新的package</h2>
+<p>引入新的<strong>内核</strong>或<strong>应用</strong>package都应该放在<code>package/phicomm</code>目录下，目录中包括Makefile及源码文件夹<code>src/</code>（如果有配置文件还应有<code>config/</code>；如果有脚本文件还应有<code>files/</code>），package Makefile的编写请参考&quot;hello-looper&quot;模块。Makefile的语法请查看 [OpenWrt manual][] “Creating packages ” “Creating kernel modules packages ”两节。</p>
+<blockquote>
+<p>【注】部分我们实现的内核模块需要修改内核，例如<code>ip_hash_stat</code>，它们虽然也实现了LKM，但还对内核原有文件中进行了修改，这种情况下一般都添加了宏，会影响内核的编译。这类修改我们将其作为内核特性看待，而非简单的内核package，具体如何添加这类模块，请参考“<a href="#添加内核特性">添加内核特性</a>”一节</p>
+</blockquote>
+<h2 id="修改一个旧的package"><span class="header-section-number">8.2</span> 修改一个旧的package</h2>
+<p>修改原OpenWrt的package时，如果发现对应package目录下没有<code>src/</code>目录，则说明其编译期有可能从互联网下载源码，并对源码打补丁。基于我们的开发模式，需要将源码压缩包解压放到对应package目录下的<code>src/</code>，并修改Makefile，让package编译时直接使用<code>src/</code>中的源码，这样更利于我们的开发，具体修改流程如下：</p>
+<ol style="list-style-type: decimal">
+<li><p>解压<code>dl/</code>中对应源码压缩包，拷贝到对应package目录下命名为<code>src/</code>。</p></li>
+<li><p>如果package需要打patch（package目录下存在<code>patches/</code>目录），则在对应package路径下执行脚本：<code>&lt;src_root&gt;/scripts/phicomm/patch-src-with-commit.sh</code>，commit_msg.tmp会保存已打补丁列表，提交时请附上这些内容，方便后续维护。</p></li>
+<li><p>修改package下的Makefile，添加如下代码</p>
+<pre class="sourceCode makefile"><code class="sourceCode makefile"><span class="kw">define</span> Build/Prepare
+    mkdir -p <span class="ch">$(</span><span class="dt">PKG_BUILD_DIR</span><span class="ch">)</span>
+    <span class="ch">$(</span><span class="dt">CP</span><span class="ch">)</span> ./src/* <span class="ch">$(</span><span class="dt">PKG_BUILD_DIR</span><span class="ch">)</span>/
+<span class="kw">endef</span></code></pre>
+<p><strong>特别注意： 上面示例代码的显示存在问题，这里的缩进一定要用TAB，不能用空格替代，以符合Makefile的语法，否则会编译失败。</strong></p></li>
+<li><p>此时做一个初始提交。这个提交的目的是让代码库中保留原始代码，有利于追溯。</p>
+<blockquote>
+<p>【参考提交】</p>
+<pre><code>commit 005f80e60cf5109fa70a8eaa0ed2cd54d487456f
+Author: Zhao Chong &lt;chong.zhao@feixun.com.cn&gt;
+Date:   Thu Apr 7 15:07:13 2016 +0800
+
+    iptables Package源码初始提交
+
+    Summary:
+    ./patches/002-layer7_2.22.patch
+    ./patches/020-iptables-disable-modprobe.patch
+    ./patches/030-no-libnfnetlink.patch
+    ./patches/100-bash-location.patch
+    ./patches/200-configurable_builtin.patch
+    ./patches/300-musl_fixes.patch
+    ./patches/400-lenient-restore.patch
+    ./patches/500-add-xt_id-match.patch
+
+    Reviewers: xiongyi.ouyang
+
+    Reviewed By: xiongyi.ouyang
+
+    Subscribers: #sop_group
+
+    Differential Revision: http://172.17.48.129/D68</code></pre>
+</blockquote></li>
+<li><p>接下来则可以进行我们的修改，并生成的新的提交。<em>tips：执行<code>mmm [-c] &lt;package_name&gt;</code>即可单独编译package</em></p></li>
+</ol>
+<h2 id="机型的特性定制"><span class="header-section-number">8.3</span> 机型的特性定制</h2>
+<p>机型的特性定制被放到<code>build/products/&lt;机型名称&gt;</code>下统一管理。其中：</p>
+<ul>
+<li><p><code>config</code>是机型的特性列表，构建时会拷贝到根目录。对任何特性的控制都应该尽量通过修改此文件来达成。</p>
+<blockquote>
+<p>参考流程，以<code>build/products/K2</code>为例:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cd</span> <span class="kw">&lt;</span>src_root<span class="kw">&gt;</span> <span class="kw">&amp;&amp;</span> <span class="kw">source</span> build/envsetup.sh
+
+<span class="co"># 输入&quot;K2&quot;</span>
+
+<span class="kw">configproduct</span>
+
+<span class="co"># 此时进入TUI界面，完成你的配置并保存退出，此时修改会被自动保存到&quot;build/products/&lt;机型名称&gt;/config&quot;</span>
+
+<span class="co"># 修改如果需要入库，需要提交 &quot;build/products/&lt;机型名称&gt;/config&quot; 的变化。</span></code></pre>
+</blockquote></li>
+</ul>
+<h2 id="实现新的特性"><span class="header-section-number">8.4</span> 实现新的特性</h2>
+<p>讲到了机型的特性定制，就要考虑如何实现可定制的特性，以及如何做好特性间的解耦。</p>
+<h3 id="添加功能特性"><span class="header-section-number">8.4.1</span> 添加功能特性</h3>
+<h3 id="添加机型特性"><span class="header-section-number">8.4.2</span> 添加机型特性</h3>
+<h3 id="添加内核特性"><span class="header-section-number">8.4.3</span> 添加内核特性</h3>
+<p>内核特性仍通过机型配置控制，特性的添加流程如下：</p>
+<ol style="list-style-type: decimal">
+<li>修改<code>package/kernel/linux/modules/phicomm.mk</code>，添加模块定义</li>
+<li>在内核源码路径（<code>package/phicomm/linux/&lt;内核源码目录&gt;/</code>）修改代码，添加特性</li>
+<li>如果特性还包含独立的LKM，则将LKM放在<code>package/phicomm/linux/&lt;内核源码目录&gt;/phicomm/&lt;模块名&gt;/</code>下</li>
+</ol>
+<blockquote>
+<p>【参考提交】</p>
+<pre><code>commit 700449324ab1e6ba49e3815110d8f44cbc5601fb
+Author: Zhao Chong &lt;chong.zhao@feixun.com.cn&gt;
+Date:   Fri Apr 8 10:16:15 2016 +0800
+
+    添加内核built-in模块ip_hash_stat
+
+    Reviewers: xiongyi.ouyang
+
+    Reviewed By: xiongyi.ouyang
+
+    Differential Revision: http://172.17.48.129/D72</code></pre>
+</blockquote>
+<h1 id="sop注意事项"><span class="header-section-number">9</span> SOP注意事项</h1>
+<ul>
+<li>任何时候都不能直接编辑修改机型目录（例如<code>build/products/K2</code>）下的<code>config</code>，开关特性请使用<code>configproduct</code>，这会自动帮你解决配置依赖并将修改添加到机型<code>config</code>中，更方便，也更可靠。</li>
+</ul>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>固件可以区分不同的类型，例如debug类型的固件是面向我们内部的调试开发，加入了后门和调试工具，而release类型的固件则是面向用户，没有后门。了解详情可阅读<a href="./SOP固件中的关键信息.html">《SOP固件中的关键信息》</a><a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+</div>
+</body>
+<script type="text/javascript">
+	document.getElementById("title").innerHTML=document.title;
+	t=document.getElementsByTagName("table");
+	h=document.getElementById("history");
+	h.innerHTML=t[0].outerHTML;
+	t[1].remove();
+</script>
+<script type="text/javascript">
+var $ = function (selector) {
+    var cl, id, alls, arrEle = [];
+    if (/^\./.test(selector)) {
+        cl = selector.replace(".", "");
+        alls = document.getElementsByTagName("*"), l = alls.length;
+        for (var i=0; i<l; i+=1) {
+            var name = alls[i].className, arrName = [];
+            if (name) {
+                arrName = name.split(" "), lName = arrName.length;
+                for (var j=0; j<lName; j+=1) {
+                    if (arrName[j] === cl) {
+                        arrEle.push(alls[i]);
+                    }
+                }
+            }
+        }
+    } else if (/^#/.test(selector)) {
+        id = selector.replace("#", "");
+        var o = document.getElementById(id);
+        if (o) {
+            arrEle.push(o);
+        }
+    }
+    return arrEle;
+};
+Array.prototype.click = function(fn) {
+    var l = this.length;
+    if (l) {
+        for (var i=0; i<l; i+=1) {
+            this[i].onclick = function() {
+                fn.call(this);
+            };
+        }
+    }
+};
+$(".acco_title").click(function() {
+    var rel = this.lang, cl = this.className;
+    if (!/on/.test(cl) && rel) {
+        $("#" + rel)[0].style.height = "100%";
+        this.className = "acco_title acco_title_on";
+    }
+
+    if (/on/.test(cl) && rel) {
+        $("#" + rel)[0].style.height = "0";
+        this.className = "acco_title";
+    }
+});
+
+function openheader(obj) {
+    var name = obj? obj.innerHTML: undefined;
+    if (name) {
+        name = name.substring(name.indexOf("</span>") + 8, name.length);
+        name = name.toLowerCase();
+    } else {
+        console.log("name is null");
+        return;
+    }
+
+    var target = document.getElementById(name);
+    if (target) {
+        var tag = target.tagName.toLowerCase();
+        if (tag.indexOf("h3") >= 0) {
+            target = target.parentNode.previousSibling;
+        } else {
+            target = target.parentNode;
+        }
+
+        if (target && target.className && target.className.indexOf("acco_title") >= 0) {
+            target.click();
+        }
+
+        target = target.parentNode.previousSibling;
+        if (target && target.className && target.className.indexOf("acco_title") >= 0) {
+            target.click();
+        }
+    }
+}
+
+var links = document.getElementsByTagName("a");
+for (var i = 0; i < links.length; i++) {
+    links[i].onclick = function(){ openheader(this) };
+}
+
+</script>
+</html>
