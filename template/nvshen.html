@@ -31,25 +31,9 @@ $for(header-includes)$
 $endfor$
 </head>
 <body>
-<div id="topside">
-	<div id="feixun">
-		<img id="feixunpic" src="../res/feixun.jpg"></img>
-	</div>
-	
-	<div class="container">
-		<div class="menu-wrap">
-			<nav class="menu">
-				<div class="icon-list" id="side-list">
-					
-				</div>
-			</nav>
-			<button class="close-button" id="close-button">Close Menu</button>
-		</div>
-		<button class="menu-button" id="open-button">Open Menu</button>
-	</div>
+<div id="feixun">
+	<img id="feixunpic" src="../res/feixun.jpg"></img>
 </div>
-
-<div id="mainbody">
 <div id="title"></div>
 <div id="hst">版本历史</div>
 <div id="history"></div>
@@ -71,7 +55,11 @@ $endif$
 </div>
 $endif$
 $if(toc)$
+<span id="navtoggle" onclick="navToggle()"><a>☰</a></span>
 <div id="TOC">
+<div id="TOC_NAV" class="sidenav">
+
+</div>
 <h1>目录</h1>
 <div id="$idprefix$TOC_CONTENT">
 $toc$
@@ -84,28 +72,36 @@ $body$
 $for(include-after)$
 $include-after$
 $endfor$
+
+
+<div id="myModal" class="modal">
+
+    <!-- The Close Button -->
+    <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+	
+    <!-- Modal Content (The Image) -->
+    <canvas id="c1"> <!--宽高写在html里，写在css里有问题-->
+        <span>该浏览器不支持canvas内容</span> <!--对于不支持canvas的浏览器显示-->
+    </canvas>
+
+    <!-- Modal Caption (Image Text) -->
+    <div id="caption"></div>
 </div>
+
 </body>
 
 <script src="../js/classie.js"></script>
 <script src="../js/main.js"></script>
 
 <script type="text/javascript">
-	toc_content=document.getElementById("TOC_CONTENT");
-	list=document.getElementById("side-list");
-	toc=document.getElementById("TOC");
-	list.innerHTML=toc_content.innerHTML;
-	toc.remove();
-</script>
+//设置标题和版本历史
+document.getElementById("title").innerHTML=document.title;
+t=document.getElementsByTagName("table");
+h=document.getElementById("history");
+h.innerHTML=t[0].outerHTML;
+t[1].remove();
 
-<script type="text/javascript">
-	document.getElementById("title").innerHTML=document.title;
-	t=document.getElementsByTagName("table");
-	h=document.getElementById("history");
-	h.innerHTML=t[0].outerHTML;
-	t[1].remove();
-</script>
-<script type="text/javascript">
+//目录链接
 var $$ = function (selector) {
     var cl, id, alls, arrEle = [];
     if (/^\./.test(selector)) {
@@ -187,6 +183,83 @@ function openheader(obj) {
 var links = document.getElementsByTagName("a");
 for (var i = 0; i < links.length; i++) {
     links[i].onclick = function(){ openheader(this) };
+}
+
+//侧边栏
+toc_content=document.getElementById("TOC_CONTENT");
+toc_nav=document.getElementById("TOC_NAV");
+toc=document.getElementById("TOC");
+toc_nav.innerHTML=toc_content.innerHTML;
+toc.remove();
+
+var nav_opened
+function navToggle() {
+    if (nav_opened == 1) {
+        document.getElementById("TOC_NAV").style.width = "0";
+        document.getElementById("body").style.marginLeft = "0";
+        nav_opened = 0;
+    } else {
+        document.getElementById("TOC_NAV").style.width = "250px";
+        document.getElementById("body").style.marginLeft = "250px";
+        nav_opened = 1;
+    }
+}
+
+//图片点击显示设置
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+var img = document.getElementsByTagName('img');
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+for(i=1;i<img.length;i++){
+
+
+img[i].onclick = function(){
+    modal.style.display = "block";
+    var oC = document.getElementById("c1");
+    var oCG = oC.getContext("2d");
+
+    //设置canvas宽高适应图片宽高
+    var w=this.width;
+    var h=this.height;
+    oC.width=w;
+    oC.height=h;
+
+    oCG.drawImage(this, 0, 0);
+    //modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+
+    oC.onmousedown = function(ev) {
+    var ev = ev || window.event;
+    oCG.moveTo(ev.clientX-oC.offsetLeft,ev.clientY-oC.offsetTop); //ev.clientX-oC.offsetLeft,ev.clientY-oC.offsetTop鼠标在当前画布上X,Y坐标
+    console.log(ev.clientX-oC.offsetLeft,ev.clientY-oC.offsetTop);
+    oC.onmousemove = function(ev) {
+        var ev = ev || window.event;//获取event对象
+        oCG.strokeStyle="#FF0000";
+        oCG.lineWidth=5;
+        oCG.lineTo(ev.clientX-oC.offsetLeft,ev.clientY-oC.offsetTop);
+        oCG.stroke();
+        };
+    oC.onmouseup = function() {
+        oC.onmousemove = null;
+        oC.onmouseup = null;
+        };
+    oC.onmouseout = function(){
+        oC.onmousemove = null;
+        oC.onmouseup = null;
+    }
+　　};
+}
+}
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() { 
+  modal.style.display = "none";
 }
 
 </script>
