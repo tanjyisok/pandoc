@@ -14,7 +14,7 @@ img#logo,img#img01 {cursor:default;opacity: 1;}
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+    padding-top: 72px; /* Location of the box */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -22,14 +22,23 @@ img#logo,img#img01 {cursor:default;opacity: 1;}
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+    text-align:center;
 }
 
-/* Modal Content (Image)  */
-#c1 {
-    margin: auto;
+/* Modal Content (Image) */
+#d1{
+    margin:auto;
+    outline:none;
+    position:relative;
+    left:0;
+    top:0;
     display: block;
-    /*width: 80%;
-    max-width: 700px;*/
+} 
+
+#c1{
+    position:absolute;
+    top:72px;
+    display: block;
 }
 
 /* Caption of Modal Image (Image Text) - Same Width as the Image */
@@ -40,12 +49,12 @@ img#logo,img#img01 {cursor:default;opacity: 1;}
     max-width: 700px;
     text-align: center;
     color: #ccc;
-    padding: 10px 0;
-    height: 150px;
+    padding: 30px 0;
+    height: 50px;
 }
 
 /* Add Animation - Zoom in the Modal */
-#c1, #caption { 
+#c1, #caption,#d1 { 
     -webkit-animation-name: zoom;
     -webkit-animation-duration: 0.6s;
     animation-name: zoom;
@@ -64,7 +73,8 @@ img#logo,img#img01 {cursor:default;opacity: 1;}
 
 /* The Close Button */
 .close {
-    position: absolute;
+    position: fixed;
+    z-index:1000;
     top: 15px;
     right: 35px;
     color: #f1f1f1;
@@ -82,7 +92,7 @@ img#logo,img#img01 {cursor:default;opacity: 1;}
 
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px){
-    #c1 {
+    #c1,#d1 {
         width: 100%;
     }
 }

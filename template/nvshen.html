@@ -31,6 +31,7 @@ $for(header-includes)$
 $endfor$
 </head>
 <body>
+<div id="mainbody">
 <div id="feixun">
 	<img id="feixunpic" src="../res/feixun.jpg"></img>
 </div>
@@ -72,15 +73,95 @@ $body$
 $for(include-after)$
 $include-after$
 $endfor$
-
+</div>
 
 <div id="myModal" class="modal">
 
-    <!-- The Close Button -->
+	<!-- The Close Button -->
     <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
 	
+    <!--工具栏-->
+    <div class="tools" style="display:block;">
+        <div class="tool-btn shape-btn" title="Pen"></div>
+        <div class="tool-select tool-color-picker">
+          <div class="tool-current-color current" id="tool-current-color" data-color="#f00"></div>
+          <div class="panel">
+            <div class="color-item" data-color="#60F"></div>
+            <div class="color-item" data-color="#09F"></div>
+            <div class="color-item" data-color="#06C"></div>
+            <div class="color-item" data-color="#FF0"></div>
+            <div class="color-item" data-color="#F60"></div>
+            <div class="color-item" data-color="#C0F"></div>
+            <div class="color-item" data-color="#966"></div>
+            <div class="color-item" data-color="#999"></div>
+            <div class="color-item" data-color="#00F"></div>
+            <div class="color-item" data-color="#0FF"></div>
+            <div class="color-item" data-color="#9F3"></div>
+            <div class="color-item" data-color="#FC0"></div>
+            <div class="color-item" data-color="#F00"></div>
+            <div class="color-item" data-color="#933"></div>
+            <div class="color-item" data-color="#000"></div>
+            <div class="color-item" data-color="#FFF"></div>
+          </div>
+         </div>
+          <div class="tool-select tool-pen-width">
+            <div class="tool-current-width current" id="tool-current-width" data-width="4">
+              <b></b> 
+              <span>4px</span>
+            </div>
+            <div class="panel">
+              <div class="pen-width-item" data-width="2">
+                <b></b>
+                <span>2px</span>
+              </div>
+              <div class="pen-width-item" data-width="4">
+                <b></b> 
+                <span>4px</span>
+              </div>
+              <div class="pen-width-item" data-width="6">
+                <b></b> 
+                <span>6px</span>
+              </div>
+              <div class="pen-width-item" data-width="8">
+                <b></b> 
+                <span>8px</span>
+              </div>
+              <div class="pen-width-item" data-width="16">
+                <b></b> 
+                <span>16px</span>
+              </div>
+            </div>
+           </div>
+           <div class="tool-btn single-btn disabled" data-action="undo" title="Undo">
+              <b></b>
+           </div>
+           <div class="tool-btn single-btn disabled" data-action="redo" title="Redo">
+              <b></b>
+           </div>
+           <div class="tool-btn single-btn disabled" data-action="clear" title="Clear">
+              <b></b>
+           </div>
+           <div class="zoom-area">
+              <div class="tool-btn single-btn" data-action="zoom-in" title="Zoom in">
+                <b></b>
+              </div>
+              <div class="tool-btn single-btn" data-action="zoom-out" title="Zoom out">
+                <b></b>
+              </div>
+              <div class="zoom-tip">Zoom:
+                <span class="zoom-level">100%</span>
+                <div class="restore-zoom" id="restore-zoom">Reset to default</div>
+              </div>
+           </div>
+    </div>
+
+
     <!-- Modal Content (The Image) -->
-    <canvas id="c1"> <!--宽高写在html里，写在css里有问题-->
+    <canvas class="layer-canvas cursor_curve" id="d1">
+        <span>该浏览器不支持canvas内容</span> <!--对于不支持canvas的浏览器显示-->
+    </canvas>
+
+    <canvas class="layer-canvas cursor_curve" id="c1">
         <span>该浏览器不支持canvas内容</span> <!--对于不支持canvas的浏览器显示-->
     </canvas>
 
@@ -211,46 +292,229 @@ var modal = document.getElementById('myModal');
 
 // Get the image and insert it inside the modal - use its "alt" text as a caption
 var img = document.getElementsByTagName('img');
-var modalImg = document.getElementById("img01");
 var captionText = document.getElementById("caption");
-for(i=1;i<img.length;i++){
 
+for(i=1;i<img.length;i++){
 
 img[i].onclick = function(){
     modal.style.display = "block";
-    var oC = document.getElementById("c1");
-    var oCG = oC.getContext("2d");
-
-    //设置canvas宽高适应图片宽高
-    var w=this.width;
-    var h=this.height;
-    oC.width=w;
-    oC.height=h;
-
-    oCG.drawImage(this, 0, 0);
-    //modalImg.src = this.src;
     captionText.innerHTML = this.alt;
 
+    var canvas = document.getElementById("d1");
+    var ctx = canvas.getContext("2d");
+    var oC = document.getElementById("c1");
+    var oCG = oC.getContext("2d");
+    var imgContent = this;
+
+    //设置图片层canvas
+    var w=this.width;
+    var h=this.height;
+    canvas.width=w;
+    canvas.height=h;
+    ctx.drawImage(imgContent, 0, 0);
+
+    //设置绘图层canvas宽高
+    oC.width=modal.offsetWidth;
+    oC.height=modal.offsetHeight;
+
+    //初始化
+    var currentColor = document.getElementById("tool-current-color");
+    var color_picker = document.getElementsByClassName("tool-color-picker");
+    var color_panel = color_picker[0].children;
+    var colorItem = document.getElementsByClassName("color-item");   
+    var currentWidth = document.getElementById("tool-current-width");
+    var width_picker = document.getElementsByClassName("tool-pen-width");
+    var width_panel = width_picker[0].children; 
+    var widthItem = document.getElementsByClassName("pen-width-item");
+    var color = "#F00";
+    var width = 4;
+    currentColor.style.backgroundColor = color;
+    currentWidth.setAttribute("data-width",width);
+    var children = currentWidth.children;
+    children[1].innerHTML = width + "px";
+
+    //颜色选择器   
+    currentColor.onclick = function(){
+      color_panel[1].classList.toggle("active");
+    }   
+    for(i=0;i<colorItem.length;i++){
+      colorItem[i].onclick = function(){
+        color = this.getAttribute("data-color");
+        currentColor.style.backgroundColor = color;
+        color_panel[1].classList.remove("active");
+      }
+    }
+    
+    //粗细选择器   
+    currentWidth.onclick = function(){
+      width_panel[1].classList.toggle("active");
+    }    
+    for(i=0;i<widthItem.length;i++){
+      widthItem[i].onclick = function(){
+        width = this.getAttribute("data-width");
+        currentWidth.setAttribute("data-width",width);
+        children[1].innerHTML = width + "px";
+        width_panel[1].classList.remove("active");
+      }
+    }
+   
+    var undo = getElementByAttribute("tool-btn","data-action","undo");
+    var redo = getElementByAttribute("tool-btn","data-action","redo");
+    var clear = getElementByAttribute("tool-btn","data-action","clear");
+    undo.classList.add("disabled");
+    redo.classList.add("disabled");
+    clear.classList.add("disabled");
+    var lines = [];
+    var redoList = [];
+    var lastX;
+    var lastY;
+    var mouseX;
+    var mouseY;
+
+    //绘图
     oC.onmousedown = function(ev) {
-    var ev = ev || window.event;
-    oCG.moveTo(ev.clientX-oC.offsetLeft,ev.clientY-oC.offsetTop); //ev.clientX-oC.offsetLeft,ev.clientY-oC.offsetTop鼠标在当前画布上X,Y坐标
-    console.log(ev.clientX-oC.offsetLeft,ev.clientY-oC.offsetTop);
-    oC.onmousemove = function(ev) {
+        var data = [];
         var ev = ev || window.event;//获取event对象
-        oCG.strokeStyle="#FF0000";
-        oCG.lineWidth=5;
-        oCG.lineTo(ev.clientX-oC.offsetLeft,ev.clientY-oC.offsetTop);
+        oCG.beginPath();
+        oCG.strokeStyle=color;
+        oCG.lineWidth=width;
+        oCG.lineCap = "round";
+        oCG.lineJoin = "round";
+        mouseX = ev.clientX-oC.offsetLeft;
+        mouseY = ev.clientY-oC.offsetTop+modal.scrollTop;
+        oCG.moveTo(mouseX,mouseY); //ev.clientX-oC.offsetLeft,ev.clientY-oC.offsetTop+modal.scrollTop鼠标在当前画布上X,Y坐标
+        data.push({
+            x: mouseX,
+            y: mouseY,
+            penSize: width,
+            penColor: color,
+            mode: "begin"
+        });
+        lastX = mouseX;
+        lastY = mouseY;
+
+    oC.onmousemove = function(ev) {
+        var ev = ev || window.event;
+
+        mouseX = ev.clientX-oC.offsetLeft;
+        mouseY = ev.clientY-oC.offsetTop+modal.scrollTop;
+        lastX = mouseX;
+        lastY = mouseY;
+        data.push({
+            x: mouseX,
+            y: mouseY,
+            penSize: width,
+            penColor: color,
+            mode: "draw"
+        });
+
+        oCG.lineTo(mouseX,mouseY);
         oCG.stroke();
         };
     oC.onmouseup = function() {
+        mouseX = ev.clientX-oC.offsetLeft;
+        mouseY = ev.clientY-oC.offsetTop+modal.scrollTop;
+        data.push({
+            x: mouseX,
+            y: mouseY,
+            penSize: width,
+            penColor: color,
+            mode: "end"
+        });
+        oCG.closePath();
+        lines.push(data);       
+        console.log(lines.length);
+        undo.classList.remove("disabled");
+        clear.classList.remove("disabled");
         oC.onmousemove = null;
         oC.onmouseup = null;
         };
-    oC.onmouseout = function(){
-        oC.onmousemove = null;
-        oC.onmouseup = null;
-    }
 　　};
+
+
+
+　　//撤销操作
+　　undo.onclick = function(){
+        var r = lines.pop();
+        redoList.push(r);        
+        if(lines.length == 0){
+            oCG.clearRect(0,0,oC.width,oC.height);
+            undo.classList.add("disabled");
+            clear.classList.add("disabled");
+        }
+        redrawAll();
+        redo.classList.remove("disabled");
+　　}
+
+　　//恢复操作
+　　redo.onclick = function(){
+　　    var r = redoList[redoList.length-1];
+　　    redraw(r);
+　　    var d = redoList.pop();
+　　    lines.push(d);
+　　    undo.classList.remove("disabled");
+　　    clear.classList.remove("disabled");
+　　    if(redoList.length == 0){
+　　        redo.classList.add("disabled");
+　　    }
+　　}
+
+　　//清空操作
+    clear.onclick = function(){
+        oCG.clearRect(0,0,oC.width,oC.height);
+        lines.splice(0,lines.length);
+        undo.classList.add("disabled");
+        redo.classList.add("disabled");
+        clear.classList.add("disabled");
+    }
+
+    function redrawAll(){
+        if (lines.length == 0) {
+        return;
+        }
+
+        oCG.clearRect(0,0,oC.width,oC.height);
+
+        for(i=0;i<lines.length;i++){
+            var d = lines[i];
+            redraw(d);
+        }
+    }
+
+    function redraw(points){
+        if (points.length == 0) {
+        return;
+        }
+        
+        for (var i = 0; i < points.length; i++) {
+
+            var pt = points[i];
+            console.log(pt.x+","+pt.y+","+pt.mode);
+
+            if (oCG.lineWidth != pt.penSize) {
+                oCG.lineWidth = pt.penSize;
+            }
+            if (oCG.strokeStyle != pt.penColor) {
+                oCG.strokeStyle = pt.penColor;
+            }
+            if (pt.mode == "begin") {
+                oCG.beginPath();
+                oCG.moveTo(pt.x, pt.y);
+                console.log("abc");
+            }
+
+            if (pt.mode == "end" || (i == points.length - 1)) {
+                oCG.stroke();
+                console.log("end");
+            }else{
+                oCG.lineTo(pt.x, pt.y);
+                console.log("cba");
+            }
+        }
+        oCG.stroke();
+        oCG.closePath();
+        console.log("123");
+    }
 }
 }
 
@@ -260,6 +524,17 @@ var span = document.getElementsByClassName("close")[0];
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() { 
   modal.style.display = "none";
+}
+
+function getElementByAttribute(clsnm,attr,value){
+   var elems = document.getElementsByClassName(clsnm);
+   for(i=0;i<elems.length;i++){
+      var elem = elems[i];
+      var v = elem.getAttribute(attr);
+      if(v == value){
+        return elem;
+      }
+   }
 }
 
 </script>
